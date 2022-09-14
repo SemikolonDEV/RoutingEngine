@@ -1,4 +1,5 @@
-﻿using RoutingEngine.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RoutingEngine.Domain.Entities;
 using RoutingEngine.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace RoutingEngine.Persistence
         public void Create(LogEntry logEntry)
         {
             _repositoryContext.Add(logEntry);
+        }
+
+        public async Task<IEnumerable<LogEntry>> GetAll(CancellationToken cancellationToken = default)
+        {
+            return await _repositoryContext.Log.ToListAsync();
         }
     }
 }

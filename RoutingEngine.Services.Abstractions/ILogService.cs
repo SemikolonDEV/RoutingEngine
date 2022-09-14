@@ -8,5 +8,7 @@ namespace RoutingEngine.Services.Abstractions
 
         public Task<LogDTO> CreateLog(LogForCreationDTO logDTO, CancellationToken cancellationToken = default);
 
+        public Task<IEnumerable<LogDTO>> GetLogs(CancellationToken cancellationToken = default);
+
     }
 }

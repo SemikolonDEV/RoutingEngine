@@ -3,6 +3,7 @@ using RoutingEngine.Domain.Entities;
 using RoutingEngine.Domain.Repositories;
 using RoutingEngine.Services.Abstractions;
 using RoutingEngineBackend.DTOS;
+using System.Linq;
 
 namespace RoutingEngine.Services
 {
@@ -41,6 +42,25 @@ namespace RoutingEngine.Services
                 Price = logEntry.Price,
                 TravelTime = logEntry.TravelTime,
             };
+        }
+
+        public async Task<IEnumerable<LogDTO>> GetLogs(CancellationToken cancellationToken = default)
+        {
+            var logEntrys = await _logRepository.GetAll(cancellationToken);
+            return logEntrys.Select(logEntry =>
+            {
+                return new LogDTO
+                {
+                    Id = logEntry.Id,
+                    CreationTime = logEntry.CreationTime,
+                    Destination = logEntry.Destination,
+                    Origin = logEntry.Origin,
+                    Distance = logEntry.Distance,
+                    Price = logEntry.Price,
+                    TravelTime = logEntry.TravelTime,
+                };
+            });
+
         }
     }
 }

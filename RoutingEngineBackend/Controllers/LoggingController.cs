@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoutingEngine.Contracts;
 using RoutingEngine.Services.Abstractions;
+using RoutingEngineBackend.DTOS;
 
 namespace RoutingEngineBackend.Controllers;
 
@@ -18,11 +19,19 @@ public class LoggingController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateLog([FromBody] LogForCreationDTO logForCreationDTO, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<LogDTO>> CreateLog([FromBody] LogForCreationDTO logForCreationDTO, CancellationToken cancellationToken = default)
     {
         var logDto =  await _logService.CreateLog(logForCreationDTO, cancellationToken);
 
         return Created("", logDto);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<LogDTO>>> GetAllLogs(CancellationToken cancellationToken = default)
+    {
+        var logDtos = await _logService.GetLogs(cancellationToken);
+
+        return Ok(logDtos);
     }
 
 

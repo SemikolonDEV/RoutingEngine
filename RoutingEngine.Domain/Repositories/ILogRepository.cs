@@ -12,4 +12,6 @@ public interface ILogRepository
 
     public void Create(LogEntry logEntry);
 
+    public Task<IEnumerable<LogEntry>> GetAll(CancellationToken cancellationToken);
+
 }
